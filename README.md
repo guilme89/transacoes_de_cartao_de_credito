@@ -1,26 +1,39 @@
 # Detecção de Anomalias em Transações com Python
 
-Projeto de Machine Learning para identificar transações potencialmente fraudulentas em uma base real de cartão de crédito. O foco principal não é apenas obter alta acurácia, mas construir uma solução capaz de lidar com uma classe extremamente desbalanceada, priorizando métricas mais relevantes para fraude, como **recall**, **precision**, **F1-score**, **ROC-AUC** e **Average Precision**.
+Projeto de Machine Learning para identificar transações potencialmente fraudulentas em uma base real de cartão de crédito. O foco do projeto não é apenas obter alta acurácia, mas construir uma solução capaz de lidar com uma classe extremamente desbalanceada, priorizando métricas mais adequadas para fraude, como **recall**, **precision**, **F1-score**, **ROC-AUC** e **Average Precision**.
 
 ---
 
-## Objetivo
+## Objetivo do projeto
 
-Desenvolver um pipeline completo de detecção de anomalias em transações financeiras, passando pelas etapas de análise dos dados, engenharia de variáveis, treinamento de modelos, avaliação com métricas adequadas e geração de relatórios para interpretação dos resultados.
+Desenvolver um pipeline completo de detecção de anomalias em transações financeiras, passando pelas seguintes etapas:
 
-O projeto busca responder perguntas práticas como:
+- análise exploratória dos dados;
+- tratamento e validação da base;
+- criação de variáveis derivadas;
+- preparação dos dados para Machine Learning;
+- treinamento de modelos de classificação;
+- avaliação com métricas adequadas para dados desbalanceados;
+- análise de threshold para tomada de decisão operacional;
+- geração de gráficos, métricas, modelos treinados e relatórios.
 
-- Quantas fraudes o modelo consegue capturar?
-- Quantos alertas gerados realmente são fraudes?
-- Qual modelo apresenta melhor equilíbrio entre recall e precision?
-- Como o ajuste de threshold altera a quantidade de fraudes capturadas e falsos positivos?
-- Quais variáveis mais influenciam a decisão dos modelos?
+O projeto busca responder perguntas práticas de negócio:
+
+- quantas fraudes o modelo consegue capturar?
+- quantos alertas gerados realmente são fraudes?
+- qual modelo apresenta melhor equilíbrio entre recall e precision?
+- o que muda ao reduzir o threshold de decisão?
+- qual configuração é mais adequada para uma operação real de prevenção a fraudes?
 
 ---
 
 ## Dataset
 
-O projeto utiliza o arquivo `creditcard.csv`, uma base real de transações de cartão de crédito.
+O projeto utiliza o arquivo `creditcard.csv`, uma base real de transações de cartão de crédito disponível no Kaggle.
+
+**Link oficial para download:** [Credit Card Fraud Detection - Kaggle](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud)
+
+Após baixar o dataset, extraia o arquivo e coloque o `creditcard.csv` dentro da pasta `data/`, conforme explicado abaixo.
 
 A variável alvo é a coluna `Class`:
 
@@ -44,11 +57,42 @@ As variáveis `V1` até `V28` são anonimizadas. As colunas `Time` e `Amount` fo
 
 ---
 
+## Importante sobre a pasta `data/`
+
+A pasta `data/` existe para armazenar o dataset utilizado no treinamento.
+
+No repositório GitHub, o arquivo `creditcard.csv` **não está incluído** por boa prática de versionamento, pois é um arquivo pesado. Por isso, dentro da pasta `data/` existe apenas um arquivo `README.md`, que serve como orientação para quem for executar o projeto.
+
+Para baixar a base, acesse o link oficial do Kaggle:
+
+[Credit Card Fraud Detection - Kaggle](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud)
+
+Depois do download, extraia o arquivo compactado e coloque o `creditcard.csv` exatamente neste caminho:
+
+```text
+deteccao-anomalias-transacoes-python/
+└── data/
+    └── creditcard.csv
+```
+
+Ou seja, depois de baixar o dataset, coloque o arquivo `creditcard.csv` dentro da pasta `data/`.
+
+O arquivo `.gitignore` foi configurado para não enviar arquivos `.csv` da pasta `data/` para o GitHub:
+
+```text
+/data/*.csv
+/data/*.zip
+```
+
+Isso mantém o repositório mais leve e profissional. O código, o notebook, os relatórios, os gráficos e os modelos ficam versionados; o dataset pesado fica apenas no ambiente local de quem for executar o projeto.
+
+---
+
 ## Por que acurácia não é suficiente?
 
 Em problemas de fraude, a classe fraudulenta costuma ser muito rara. Neste dataset, menos de 0,2% das transações são fraude.
 
-Isso significa que um modelo poderia acertar quase tudo apenas classificando todas as transações como normais. Mesmo assim, ele seria inútil para o negócio, porque não encontraria as fraudes.
+Um modelo poderia atingir acurácia muito alta classificando quase todas as transações como normais. Mesmo assim, ele seria pouco útil para o negócio, porque deixaria de capturar as fraudes.
 
 Por isso, o projeto avalia os modelos com métricas mais adequadas:
 
@@ -74,6 +118,7 @@ deteccao-anomalias-transacoes-python/
 ├── docs/
 │   ├── estrutura_do_projeto.md
 │   └── guia_codigo_passo_a_passo.md
+│    
 ├── models/
 │   ├── logistic_baseline.pkl
 │   ├── logistic_balanced.pkl
@@ -89,10 +134,27 @@ deteccao-anomalias-transacoes-python/
 ├── reports/
 │   ├── insights_melhoria_processo.md
 │   ├── relatorio_treinamento.md
-│   └── tabela_metricas_markdown.md
+│   ├── tabela_metricas_markdown.md
+│   └── tabela_thresholds_markdown.md
 └── src/
     └── deteccao_anomalias_transacoes.py
 ```
+
+### O que cada pasta contém
+
+| Pasta/arquivo | Função no projeto |
+|---|---|
+| `README.md` | Documentação principal do repositório. |
+| `requirements.txt` | Lista de bibliotecas necessárias para executar o projeto. |
+| `.gitignore` | Define arquivos que não devem ser enviados ao GitHub, como datasets pesados. |
+| `data/` | Pasta onde o usuário deve colocar o arquivo `creditcard.csv`. |
+| `docs/` | Documentações auxiliares do projeto e explicação passo a passo do código. |
+| `models/` | Modelos treinados salvos em `.pkl`. |
+| `notebooks/` | Notebook com a análise didática do projeto. |
+| `outputs/figures/` | Gráficos gerados pelo treinamento. |
+| `outputs/metrics/` | Métricas em arquivos `.csv` e `.json`. |
+| `reports/` | Relatórios finais em Markdown. |
+| `src/` | Código Python principal do pipeline. |
 
 ---
 
@@ -115,7 +177,7 @@ deteccao-anomalias-transacoes-python/
 | Importância das variáveis | Identifica quais atributos tiveram maior peso nos modelos baseados em árvores. |
 | Relatório final | Gera arquivos com métricas, gráficos, modelo treinado e relatório em Markdown. |
 
-Uma explicação mais detalhada do código está em `docs/guia_codigo_passo_a_passo.md`.
+Uma explicação mais detalhada está no arquivo `docs/guia_codigo_passo_a_passo.md`.
 
 ---
 
@@ -180,7 +242,7 @@ O modelo escolhido como melhor alternativa operacional foi o **Random Forest bal
 
 Apesar de outros modelos apresentarem recall maior, eles geraram um volume muito alto de falsos positivos. Em um cenário real, isso pode sobrecarregar a equipe de análise e prejudicar a experiência dos clientes.
 
-O Random Forest balanceado apresentou o melhor equilíbrio entre captura de fraudes e qualidade dos alertas.
+O Random Forest balanceado apresentou melhor equilíbrio entre captura de fraudes e qualidade dos alertas.
 
 | Métrica | Valor |
 |---|---:|
@@ -197,31 +259,31 @@ O Random Forest balanceado apresentou o melhor equilíbrio entre captura de frau
 
 ## Análise de threshold
 
-Além do threshold padrão de 0,50, o projeto testa diferentes pontos de corte para entender o impacto na operação. Nesta versão, foi adicionada uma análise específica do **threshold 0,30**, porque ele representa uma configuração mais agressiva para capturar fraudes.
+O threshold é o ponto de corte usado para transformar a probabilidade prevista pelo modelo em uma classificação final.
 
-Comparativo operacional do modelo `random_forest_balanced`:
+Exemplo: com threshold `0,50`, uma transação com probabilidade de fraude maior ou igual a 50% é classificada como fraude. Ao reduzir o threshold para `0,30`, o modelo passa a ser mais sensível, classificando mais transações como suspeitas.
 
-| Threshold | Cenário | Precision | Recall | F1-score | Alertas | Fraudes capturadas | Falsos positivos | Fraudes não capturadas |
-|---:|---|---:|---:|---:|---:|---:|---:|---:|
-| 0,30 | Agressivo: maior captura de fraudes | 0,6276 | 0,8311 | 0,7151 | 196 | 123 | 73 | 25 |
-| 0,50 | Padrão operacional inicial | 0,8298 | 0,7905 | 0,8097 | 141 | 117 | 24 | 31 |
-| 0,55 | Maior F1-score observado | 0,8519 | 0,7770 | 0,8127 | 135 | 115 | 20 | 33 |
+Comparação dos thresholds no modelo **Random Forest balanceado**:
 
-Leitura do threshold 0,30:
+| Threshold | Precision | Recall | F1-score | Alertas | Fraudes capturadas | Falsos positivos | Fraudes não capturadas |
+|---:|---:|---:|---:|---:|---:|---:|---:|
+| 0,30 | 0,6276 | 0,8311 | 0,7151 | 196 | 123 | 73 | 25 |
+| 0,50 | 0,8298 | 0,7905 | 0,8097 | 141 | 117 | 24 | 31 |
+| 0,55 | 0,8519 | 0,7770 | 0,8127 | 135 | 115 | 20 | 33 |
 
-- captura **123 fraudes**, contra 117 no threshold 0,50;
-- reduz as fraudes não capturadas de 31 para **25**;
-- gera **196 alertas**, contra 141 no threshold 0,50;
-- aumenta os falsos positivos de 24 para **73**;
-- melhora o recall, mas reduz precision e F1-score.
+Interpretação:
 
-Conclusão: o threshold 0,30 é útil quando a prioridade do negócio é **capturar mais fraudes**, mesmo aceitando uma fila maior de análise. Para uma operação mais equilibrada, o threshold 0,50 continua mais conservador e eficiente. O threshold 0,55 apresentou o maior F1-score observado, mas capturou menos fraudes que 0,30 e 0,50.
+- o threshold `0,30` capturou mais fraudes, encontrando 123 das 148 fraudes da base de teste;
+- em comparação com o threshold `0,50`, o threshold `0,30` capturou 6 fraudes a mais;
+- porém, os falsos positivos subiram de 24 para 73;
+- o threshold `0,50` manteve melhor equilíbrio operacional;
+- o threshold `0,55` reduziu falsos positivos, mas deixou mais fraudes passarem.
 
-Interpretação geral:
+Conclusão operacional:
 
-- thresholds menores tendem a capturar mais fraudes, mas aumentam os falsos positivos;
-- thresholds maiores reduzem falsos positivos, mas podem deixar mais fraudes passarem;
-- a escolha ideal depende do custo financeiro da fraude e da capacidade operacional de revisar alertas.
+- se a empresa deseja ser mais agressiva na prevenção a fraudes, o threshold `0,30` pode ser interessante;
+- se a empresa precisa equilibrar captura de fraude com menor volume de alertas, o threshold `0,50` continua sendo mais equilibrado;
+- a escolha ideal depende do custo da fraude, da capacidade da equipe de análise e do impacto de bloquear transações legítimas.
 
 ---
 
@@ -256,76 +318,99 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 4. Adicionar o dataset
+### 4. Baixar e adicionar o dataset
 
-Coloque o arquivo `creditcard.csv` dentro da pasta:
+Baixe o dataset no Kaggle:
+
+[Credit Card Fraud Detection - Kaggle](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud)
+
+Depois do download, extraia o arquivo e coloque o `creditcard.csv` dentro da pasta `data/`.
+
+O caminho final precisa ficar assim:
 
 ```text
 data/creditcard.csv
 ```
 
-### 5. Executar o treinamento
+Sem esse arquivo, o treinamento não será executado, porque o código procura a base neste caminho.
+
+### 5. Executar o treinamento completo
 
 ```bash
 python src/deteccao_anomalias_transacoes.py
 ```
 
-### 6. Executar com GridSearch opcional
+### 6. Rodar GridSearch opcional
 
 ```bash
 python src/deteccao_anomalias_transacoes.py --run-grid-search
 ```
 
+Nesta versão do projeto, o GridSearch também foi executado. O melhor conjunto encontrado foi:
+
+```text
+{'max_depth': 3, 'n_estimators': 40}
+```
+
 ---
 
-## Arquivos gerados
+## Arquivos de saída
 
-Após a execução, o projeto gera arquivos de apoio para análise:
+Após a execução, o projeto gera arquivos como:
 
-| Caminho | Conteúdo |
-|---|---|
-| `outputs/metrics/dataset_profile.json` | Perfil geral do dataset. |
-| `outputs/metrics/metricas_modelos.csv` | Comparação consolidada dos modelos. |
-| `outputs/metrics/threshold_analysis.csv` | Resultado da análise de diferentes thresholds. |
-| `outputs/metrics/threshold_comparison_030_050_055.csv` | Comparação direta entre thresholds 0,30, 0,50 e 0,55. |
-| `outputs/figures/distribuicao_class.png` | Gráfico da distribuição da variável alvo. |
-| `outputs/figures/curva_roc_*.png` | Curvas ROC dos modelos treinados. |
-| `outputs/figures/curva_precision_recall_*.png` | Curvas Precision-Recall dos modelos treinados. |
-| `outputs/figures/importancia_variaveis_*.png` | Gráficos de importância das variáveis. |
-| `outputs/figures/comparativo_threshold_030_050_055.png` | Gráfico comparando impactos operacionais dos thresholds. |
-| `models/melhor_modelo_fraude.pkl` | Modelo selecionado como melhor alternativa operacional. |
-| `reports/relatorio_treinamento.md` | Relatório final do treinamento. |
+```text
+outputs/metrics/dataset_profile.json
+outputs/metrics/metricas_modelos.csv
+outputs/metrics/threshold_analysis.csv
+outputs/metrics/threshold_comparison_030_050_055.csv
+outputs/metrics/importancia_variaveis_random_forest_balanced.csv
+outputs/metrics/importancia_variaveis_xgboost_balanced.csv
+outputs/figures/distribuicao_class.png
+outputs/figures/curva_roc_*.png
+outputs/figures/curva_precision_recall_*.png
+outputs/figures/importancia_variaveis_*.png
+outputs/figures/comparativo_threshold_030_050_055.png
+models/melhor_modelo_fraude.pkl
+reports/relatorio_treinamento.md
+reports/insights_melhoria_processo.md
+```
 
 ---
 
 ## Principais aprendizados
 
-- Em bases desbalanceadas, acurácia pode ser uma métrica enganosa.
-- Recall é essencial para medir a capacidade de capturar fraudes reais.
-- Precision é importante para controlar falsos positivos e evitar excesso de alertas.
-- O melhor modelo não é necessariamente o que captura mais fraudes, mas o que equilibra captura e viabilidade operacional.
-- A análise de threshold permite adaptar o modelo ao apetite de risco e à capacidade de análise da empresa.
-- O threshold 0,30 aumenta a captura de fraudes, mas exige maior capacidade operacional para revisar falsos positivos.
-- A importância das variáveis ajuda a tornar o modelo mais interpretável e confiável.
+- Em bases extremamente desbalanceadas, acurácia isolada pode mascarar modelos ruins.
+- Recall é essencial para medir a capacidade de captura de fraudes.
+- Precision é importante para controlar o volume de falsos alertas.
+- O ajuste de threshold muda diretamente a estratégia operacional do modelo.
+- Modelos com maior recall nem sempre são os melhores para produção, pois podem gerar falsos positivos demais.
+- O Random Forest balanceado apresentou o melhor equilíbrio geral neste projeto.
 
 ---
 
 ## Possíveis melhorias futuras
 
-- Testar novas variáveis comportamentais baseadas em sequência de transações.
-- Avaliar custos financeiros diferentes para falso positivo e falso negativo.
-- Criar uma rotina de monitoramento para acompanhar queda de performance ao longo do tempo.
-- Simular cenários operacionais com limite diário de alertas.
-- Comparar novos modelos mantendo o mesmo conjunto de métricas.
+Este projeto já apresenta um pipeline completo de Machine Learning para detecção de fraudes. Mesmo assim, em um ambiente real, o processo poderia evoluir com novos testes, novas variáveis e melhor acompanhamento operacional.
+
+| Melhoria | Como ajudaria o projeto |
+|---|---|
+| Testar novos thresholds | Avaliar pontos de corte como `0,20`, `0,25`, `0,35` e `0,40`, buscando o melhor equilíbrio entre fraudes capturadas e falsos positivos. |
+| Definir threshold por custo de negócio | Escolher o ponto de corte considerando o custo financeiro de uma fraude não capturada versus o custo operacional de investigar um falso positivo. |
+| Criar novas variáveis temporais | Explorar padrões baseados em horário, sequência de transações e comportamento ao longo do tempo. |
+| Aprofundar a análise dos falsos negativos | Entender as fraudes que o modelo deixou passar e buscar características comuns entre elas. |
+| Aprofundar a análise dos falsos positivos | Identificar por que transações normais foram marcadas como fraude e reduzir alertas desnecessários. |
+| Expandir o GridSearch | Testar mais combinações de hiperparâmetros para Random Forest e XGBoost. |
+| Aplicar validação cruzada estratificada | Reduzir a dependência de uma única divisão treino/teste e obter métricas mais estáveis. |
+| Calibrar probabilidades | Melhorar a interpretação das probabilidades previstas antes da escolha do threshold. |
+| Reforçar explicabilidade | Usar importância de variáveis e SHAP para explicar melhor por que uma transação foi considerada suspeita. |
+| Criar visão operacional dos alertas | Organizar os resultados em uma fila de investigação, priorizando transações com maior probabilidade de fraude. |
+
+Essas melhorias não mudam o objetivo central do projeto. Elas representam próximos passos para aproximar a solução de um cenário real de prevenção a fraudes, onde o modelo precisa equilibrar captura de risco, volume de alertas e capacidade operacional da equipe de análise.
 
 ---
 
-## Tecnologias utilizadas
+## Observação final
 
-- Python
-- Pandas
-- NumPy
-- Matplotlib
-- Scikit-learn
-- XGBoost
-- Joblib
+Este repositório foi estruturado para demonstrar um fluxo completo de Machine Learning aplicado à detecção de fraudes: da preparação dos dados até a análise operacional dos resultados.
+
+Para executar o projeto, lembre-se de colocar o arquivo `creditcard.csv` dentro da pasta `data/`.
