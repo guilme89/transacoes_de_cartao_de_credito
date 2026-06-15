@@ -1,0 +1,15 @@
+{
+    "modelo": "logistic_balanced",
+    "threshold": 0.5,
+    "accuracy": 0.9778916938777898,
+    "precision": 0.06496751624187906,
+    "recall": 0.8783783783783784,
+    "f1_score": 0.1209865053513262,
+    "roc_auc": 0.9711271532978549,
+    "average_precision": 0.7047152166711069,
+    "true_negative": 83424,
+    "false_positive": 1871,
+    "false_negative": 18,
+    "true_positive": 130,
+    "alertas_gerados": 2001
+}

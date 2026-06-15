@@ -1,0 +1,15 @@
+{
+    "modelo": "logistic_baseline",
+    "threshold": 0.5,
+    "accuracy": 0.9991573329588147,
+    "precision": 0.8584905660377359,
+    "recall": 0.6148648648648649,
+    "f1_score": 0.7165354330708661,
+    "roc_auc": 0.9583585109231395,
+    "average_precision": 0.7122583473233133,
+    "true_negative": 85280,
+    "false_positive": 15,
+    "false_negative": 57,
+    "true_positive": 91,
+    "alertas_gerados": 106
+}

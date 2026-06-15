@@ -1,0 +1,13 @@
+{
+    "linhas": 284807,
+    "colunas": 31,
+    "valores_ausentes_total": 0,
+    "transacoes_normais": 284315,
+    "transacoes_fraudulentas": 492,
+    "percentual_normal": 0.9982725143693799,
+    "percentual_fraude": 0.001727485630620034,
+    "amount_min": 0.0,
+    "amount_mediana": 22.0,
+    "amount_media": 88.34961925093134,
+    "amount_max": 25691.16
+}

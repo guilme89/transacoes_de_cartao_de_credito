@@ -1,0 +1,15 @@
+{
+    "modelo": "xgboost_balanced",
+    "threshold": 0.5,
+    "accuracy": 0.9862130309094952,
+    "precision": 0.09953343701399689,
+    "recall": 0.8648648648648649,
+    "f1_score": 0.17852161785216178,
+    "roc_auc": 0.9660236413211383,
+    "average_precision": 0.6620117738184885,
+    "true_negative": 84137,
+    "false_positive": 1158,
+    "false_negative": 20,
+    "true_positive": 128,
+    "alertas_gerados": 1286
+}

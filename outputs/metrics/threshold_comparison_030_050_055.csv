@@ -1,0 +1,4 @@
+threshold,cenario,precision,recall,f1_score,alertas_gerados,fraudes_capturadas,falsos_positivos,fraudes_nao_capturadas
+0.3,Agressivo: maior captura de fraudes,0.6275510204081632,0.831081081081081,0.7151162790697675,196,123,73,25
+0.5,Padrão operacional inicial,0.8297872340425532,0.7905405405405406,0.8096885813148789,141,117,24,31
+0.55,Maior F1-score observado,0.8518518518518519,0.777027027027027,0.8127208480565371,135,115,20,33

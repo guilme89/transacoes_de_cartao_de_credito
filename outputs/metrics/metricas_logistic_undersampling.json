@@ -1,0 +1,15 @@
+{
+    "modelo": "logistic_undersampling",
+    "threshold": 0.5,
+    "accuracy": 0.9804665098369674,
+    "precision": 0.07251264755480608,
+    "recall": 0.8716216216216216,
+    "f1_score": 0.13388687078360145,
+    "roc_auc": 0.9726416902863353,
+    "average_precision": 0.4129878173111468,
+    "true_negative": 83645,
+    "false_positive": 1650,
+    "false_negative": 19,
+    "true_positive": 129,
+    "alertas_gerados": 1779
+}
